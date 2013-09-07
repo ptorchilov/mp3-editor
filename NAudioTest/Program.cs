@@ -1,39 +1,49 @@
-﻿using System;
-using System.IO;
-using WaveLib;
-using Yeti.Lame;
-using Yeti.MMedia;
-using Yeti.MMedia.Mp3;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Program.cs" company="Itransition">
+//   Torchilov Pavel  
+// </copyright>
+// <summary>
+//   The program.s
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace NAudioTest
 {
+    using System;
+
+    /// <summary>
+    /// The program.s
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// The main.
+        /// </summary>
         private static void Main()
         {
-            const String Mp3Path =
+            const string Mp3Path =
                 @"D:\test\01 Ef.mp3";
             try
             {
-                //trim mp3
+                // trim mp3
                 var trimmedMp3 = EffectsUtility.TrimMp3(Mp3Path, 33.0, 24.0);
 
-                //convert to wav
+                // convert to wav
                 var wavFile = EffectsUtility.ConvertToWav(trimmedMp3);
 
-                //fade in in begin
+                // fade in in begin
                 var fadein = EffectsUtility.BeginFadeIn(wavFile, 5.0);
 
-                //fade out in end
+                // fade out in end
                 var fadeout = EffectsUtility.EndFadeOut(wavFile, 5.0);
 
-                //change volume
+                // change volume
                 var volume = EffectsUtility.ChangeVolume(fadein, 2.0);
 
-                //normalize
+                // normalize
                 var normalize = EffectsUtility.Normalize(volume);
 
-                //convert to mp3
+                // convert to mp3
                 EffectsUtility.ConvertWavToMp3(normalize);
             }
             catch (Exception e)
